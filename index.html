@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#0a0f14">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>USDT حساب</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="USDT">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#0a0f14; --card:#121a23; --card2:#17212c; --ink:#e7edf4; --muted:#8a97a8; --line:#222d3a; --line2:#2c3949;
+  --brand:#2dd4bf; --brand2:#0d9488; --brand-ink:#04201c;
+  --pos:#34d399; --pos-bg:rgba(52,211,153,.12); --neg:#f87171; --neg-bg:rgba(248,113,113,.12);
+  --warn:#fbbf24; --gold:#f5c451; --blue:#60a5fa;
+  --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35);
+  --font:"Noto Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --head:"Noto Kufi Arabic","Noto Sans Arabic","Segoe UI",sans-serif;
+  --nums:"Inter","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.6;
+  background:radial-gradient(900px 500px at 85% -10%,rgba(45,212,191,.13),transparent 60%),
+             radial-gradient(700px 400px at 0% 0%,rgba(96,165,250,.08),transparent 60%),var(--bg);background-attachment:fixed}
+header{position:sticky;top:0;z-index:10;background:rgba(10,15,20,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);padding:12px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;flex:1}
+.logo .mark{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-family:var(--nums);font-weight:800;font-size:19px;
+  color:var(--brand-ink);background:linear-gradient(135deg,#5eead4,#14b8a6);box-shadow:0 6px 18px rgba(45,212,191,.35)}
+header h1{margin:0;font-family:var(--head);font-size:18px;font-weight:700}
+header h1 small{display:block;font-family:var(--font);font-size:12px;color:var(--muted);font-weight:400;margin-top:-2px}
+nav{display:flex;gap:4px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);padding:4px;border-radius:12px}
+nav button{background:transparent;color:var(--muted);border:0;padding:7px 14px;border-radius:9px;font:inherit;font-size:14px;cursor:pointer;transition:.15s}
+nav button:hover{color:var(--ink)}
+nav button.on{background:var(--card2);color:var(--brand);font-weight:600;box-shadow:inset 0 0 0 1px var(--line2)}
+main{max-width:1120px;margin:0 auto;padding:22px 18px 40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+#stats{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.card{background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+.stat{position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--brand)}
+.stat:nth-child(1)::before{background:var(--pos)} .stat:nth-child(2)::before{background:var(--neg)}
+.stat:nth-child(3)::before{background:var(--blue)} .stat:nth-child(4)::before{background:var(--gold)}
+.stat .lbl{color:var(--muted);font-size:13px}
+.stat .val{font-family:var(--nums);font-size:25px;font-weight:700;margin-top:6px;direction:ltr;text-align:right;letter-spacing:-.3px}
+.stat:nth-child(4) .val{color:var(--gold)}
+.net{margin-top:22px;padding:22px 24px;border-radius:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:var(--head);font-size:19px;font-weight:700;box-shadow:var(--shadow)}
+.net .val{font-family:var(--nums);font-size:34px;font-weight:800;direction:ltr;letter-spacing:-.5px}
+.net small{font-family:var(--font)}
+.net.pos{background:linear-gradient(135deg,rgba(52,211,153,.18),rgba(45,212,191,.06));color:var(--pos);border:1px solid rgba(52,211,153,.35)}
+.net.neg{background:linear-gradient(135deg,rgba(248,113,113,.18),rgba(248,113,113,.05));color:var(--neg);border:1px solid rgba(248,113,113,.35)}
+h2{font-family:var(--head);font-size:16px;font-weight:600;margin:26px 0 10px;display:flex;align-items:center;gap:8px}
+h2::before{content:"";width:6px;height:18px;border-radius:3px;background:var(--brand)}
+.card h2::before{display:none}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle}
+th{background:var(--card2);color:var(--muted);font-weight:500;font-size:12.5px}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tr:last-child td{border-bottom:0}
+tfoot td{background:var(--card2);font-weight:700;border-top:1px solid var(--line2)}
+.num{font-family:var(--nums);direction:ltr;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.pos{color:var(--pos)} .neg{color:var(--neg)}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.tag.pos{background:var(--pos-bg)} .tag.neg{background:var(--neg-bg)} .tag.zero{background:rgba(255,255,255,.06);color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted)}
+input,select,textarea{font:inherit;padding:9px 12px;border:1px solid var(--line2);border-radius:10px;background:#0d141b;color:var(--ink);min-width:0;outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(45,212,191,.18)}
+input::placeholder{color:#5c6878}
+input[type=number]{font-family:var(--nums);direction:ltr;text-align:right}
+input[type=checkbox]{accent-color:var(--brand);width:16px;height:16px;vertical-align:middle;margin-inline-end:6px}
+optgroup{background:var(--card);color:var(--muted)} option{color:var(--ink)}
+button.b{font:inherit;font-size:14px;padding:9px 16px;border-radius:10px;border:1px solid var(--line2);background:var(--card2);color:var(--ink);cursor:pointer;transition:.15s}
+button.b:hover{border-color:var(--muted)}
+button.b.p{background:linear-gradient(135deg,#5eead4,#14b8a6);border-color:transparent;color:var(--brand-ink);font-weight:700;box-shadow:0 6px 16px rgba(45,212,191,.25)}
+button.b.p:hover{filter:brightness(1.08)}
+button.b.d{color:var(--neg);border-color:rgba(248,113,113,.4);background:var(--neg-bg)}
+button.lnk{border:0;background:none;color:var(--brand);cursor:pointer;font:inherit;padding:2px 6px;border-radius:6px}
+button.lnk:hover{background:rgba(45,212,191,.1)}
+button.lnk.d{color:var(--neg)} button.lnk.d:hover{background:var(--neg-bg)}
+td button.lnk{font-weight:500}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.toolbar .sp{flex:1}
+.muted{color:var(--muted)}
+.hide{display:none!important}
+dialog{border:1px solid var(--line2);border-radius:20px;padding:0;width:min(470px,calc(100vw - 32px));background:var(--card);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+dialog::backdrop{background:rgba(2,6,10,.7);backdrop-filter:blur(3px)}
+dialog form{padding:22px;display:flex;flex-direction:column;gap:13px}
+dialog h3{margin:0 0 2px;font-family:var(--head);font-size:18px}
+.seg{display:flex;background:#0d141b;border:1px solid var(--line2);border-radius:11px;padding:3px;gap:3px}
+.seg label{flex:1;flex-direction:row;justify-content:center;padding:8px;cursor:pointer;color:var(--muted);font-size:13.5px;border-radius:8px;transition:.15s;text-align:center}
+.seg input{display:none}
+.seg label:has(input[value="1"]:checked){background:var(--pos-bg);color:var(--pos);font-weight:600}
+.seg label:has(input[value="-1"]:checked){background:var(--neg-bg);color:var(--neg);font-weight:600}
+#txFeeHint,#trFeeHint{color:var(--gold);font-size:13px}
+.calc{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#calcOut span{display:inline-block;background:#0d141b;border:1px solid var(--line);border-radius:10px;padding:6px 12px;margin:3px 0;color:var(--muted)}
+#calcOut b{color:var(--ink)} #calcOut .num{color:var(--gold)}
+.banner{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);color:var(--warn);padding:11px 14px;border-radius:12px;margin-bottom:16px}
+.scroll{overflow-x:auto;border-radius:var(--radius)}
+::-webkit-scrollbar{width:10px;height:10px} ::-webkit-scrollbar-thumb{background:var(--line2);border-radius:10px} ::-webkit-scrollbar-track{background:transparent}
+header{padding-top:max(12px,env(safe-area-inset-top));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+main{padding-bottom:max(40px,env(safe-area-inset-bottom))}
+body{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+@media (max-width:600px){
+  input,select,textarea{font-size:16px}
+  header{padding:max(10px,env(safe-area-inset-top)) 12px 10px} nav{width:100%;flex-wrap:nowrap} nav button{flex:1;padding:7px 2px;font-size:12.5px;white-space:nowrap}
+  main{padding:16px 12px 32px} #stats{grid-template-columns:1fr 1fr;gap:10px} .stat{padding:12px} .stat .val{font-size:17px} .net .val{font-size:26px} th,td{padding:8px 7px}
+}
+@media print{
+  :root{--bg:#fff;--card:#fff;--card2:#f5f7fa;--ink:#111;--muted:#555;--line:#ddd;--line2:#ccc;--pos:#15803d;--neg:#c62828;--gold:#a16207}
+  body{background:#fff} header,nav,.toolbar,.noprint,.banner{display:none!important} .net{box-shadow:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo"><div class="mark">₮</div><h1>حسابی USDT<small>پارە، قەرز، والێت و قازانج</small></h1></div>
+  <nav id="nav">
+    <button data-tab="home" class="on">سەرەکی</button>
+    <button data-tab="people">کەسەکان</button>
+    <button data-tab="wallets">والێتەکان</button>
+    <button data-tab="txs">مامەڵەکان</button>
+    <button data-tab="settings">ڕێکخستن</button>
+  </nav>
+</header>
+<main>
+  <div id="backupWarn" class="banner hide"></div>
+
+  <!-- HOME -->
+  <section id="tab-home">
+    <div id="welcome" class="card hide" style="margin-bottom:16px;border-color:rgba(45,212,191,.4)">
+      <h2 style="margin:0 0 6px">بەخێربێیت 👋</h2>
+      <p class="muted" style="margin:0 0 12px">هێشتا هیچ داتایەک نییە. فایلی باکئەپەکەت (JSON) بگەڕێنەرەوە، یان کەس و مامەڵەی نوێ زیاد بکە.</p>
+      <div class="row"><button class="b p" data-act="restore">⬆ گەڕاندنەوەی باکئەپ</button><button class="b" data-act="newAcc" data-type="person">+ کەسی نوێ</button></div>
+    </div>
+    <div class="toolbar">
+      <button class="b p" data-act="newTx">+ مامەڵەی نوێ</button>
+      <button class="b" data-act="newTransfer">⇄ گواستنەوە</button>
+      <span class="sp"></span>
+      <button class="b" onclick="print()">چاپکردن</button>
+    </div>
+    <div class="grid" id="stats"></div>
+    <div class="grid" style="margin-top:12px">
+      <div>
+        <h2>پارەم لای کێیە <span class="muted" style="font-size:13px">(هەیە)</span></h2>
+        <table><tbody id="homeRecv"></tbody></table>
+      </div>
+      <div>
+        <h2>قەرزاری کێم <span class="muted" style="font-size:13px">(لامە)</span></h2>
+        <table><tbody id="homePay"></tbody></table>
+      </div>
+    </div>
+    <h2>والێتەکان</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>والێت</th><th>عمولە %</th><th>باڵانس</th><th>عمولە</th></tr></thead>
+      <tbody id="homeWallets"></tbody>
+    </table></div>
+    <div id="netBox" class="net"></div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section id="tab-people" class="hide">
+    <div class="toolbar">
+      <button class="b p" data-act="newAcc" data-type="person">+ کەسی نوێ</button>
+      <input id="peopleSearch" placeholder="گەڕان بە ناو..." style="width:200px">
+      <span class="sp"></span>
+      <select id="peopleFilter"><option value="all">هەموو</option><option value="pos">هەیە (لایەتی)</option><option value="neg">قەرزارم</option><option value="zero">سفر</option></select>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>ناو</th><th>باڵانس</th><th>دۆخ</th><th>دوایین مامەڵە</th><th class="noprint"></th></tr></thead>
+      <tbody id="peopleBody"></tbody>
+      <tfoot id="peopleFoot"></tfoot>
+    </table></div>
+  </section>
+
+  <!-- WALLETS -->
+  <section id="tab-wallets" class="hide">
+    <div class="toolbar">
+      <button class="b p" data-act="newAcc" data-type="wallet">+ والێتی نوێ</button>
+    </div>
+    <div class="card" style="margin-bottom:12px">
+      <b>حاسیبەی عمولە</b>
+      <div class="calc" style="margin-top:8px">
+        <label>بڕ ($)<input id="calcAmt" type="number" value="10000" style="width:140px"></label>
+        <div id="calcOut" class="muted"></div>
+      </div>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>والێت</th><th>عمولە %</th><th>باڵانس</th><th>عمولە</th><th>دوای عمولە</th><th class="noprint"></th></tr></thead>
+      <tbody id="walletBody"></tbody>
+      <tfoot id="walletFoot"></tfoot>
+    </table></div>
+  </section>
+
+  <!-- TRANSACTIONS -->
+  <section id="tab-txs" class="hide">
+    <div class="toolbar">
+      <button class="b p" data-act="newTx">+ مامەڵەی نوێ</button>
+      <button class="b" data-act="newTransfer">⇄ گواستنەوە</button>
+      <select id="txFilter"><option value="">هەموو حسابەکان</option></select>
+      <input id="txSearch" placeholder="گەڕان لە تێبینی..." style="width:180px">
+      <span class="sp"></span>
+      <span id="txCount" class="muted"></span>
+    </div>
+    <div class="scroll"><table>
+      <thead><tr><th>بەروار</th><th>حساب</th><th>بڕ</th><th>تێبینی</th><th>باڵانس دوای</th><th class="noprint"></th></tr></thead>
+      <tbody id="txBody"></tbody>
+    </table></div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="tab-settings" class="hide">
+    <div class="card">
+      <h2 style="margin-top:0">باکئەپ</h2>
+      <p class="muted">داتاکان لەناو ئەم بڕاوزەرەدا پاشەکەوت دەکرێن. هەفتانە باکئەپ دابگرە بۆ ئەوەی هیچ ون نەبێت.</p>
+      <div class="row">
+        <button class="b p" data-act="backup">⬇ داگرتنی باکئەپ (JSON)</button>
+        <button class="b" data-act="restore">⬆ گەڕاندنەوەی باکئەپ</button>
+        <button class="b" data-act="csv">⬇ دەرکردن بۆ Excel (CSV)</button>
+        <input type="file" id="restoreFile" accept=".json" class="hide">
+      </div>
+      <p id="lastBackup" class="muted"></p>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h2 style="margin-top:0">عمولە لە قازانج و زەرەردا</h2>
+      <div class="seg" style="max-width:420px">
+        <label><input type="radio" name="feeSign" value="1">زیاد دەکرێت (+)</label>
+        <label><input type="radio" name="feeSign" value="-1">کەم دەکرێتەوە (−)</label>
+      </div>
+      <p class="muted">لە فایلی Excel ـەکەتدا عمولە زیاد دەکرا بۆ کۆی گشتی (+).</p>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <h2 style="margin-top:0">سڕینەوەی هەموو داتا</h2>
+      <button class="b d" data-act="reset">سڕینەوە و دەستپێکردنەوە لە داتای Excel</button>
+    </div>
+  </section>
+</main>
+
+<!-- Transaction dialog -->
+<dialog id="txDlg"><form method="dialog" id="txForm">
+  <h3 id="txTitle">مامەڵەی نوێ</h3>
+  <label>حساب<select name="acc" required></select></label>
+  <div class="seg">
+    <label><input type="radio" name="dir" value="1" checked><span id="dirPos">پارەم دا / لای ئەوە</span></label>
+    <label><input type="radio" name="dir" value="-1"><span id="dirNeg">پارەی دامێ / قەرزارم</span></label>
+  </div>
+  <label>بڕ ($)<input name="amt" type="number" step="any" min="0" required></label>
+  <div id="txFeeHint" class="muted"></div>
+  <label>بەروار<input name="date" type="date" required></label>
+  <label>تێبینی<input name="note"></label>
+  <div class="row"><button class="b p" value="ok">پاشەکەوت</button><button class="b" value="cancel" formnovalidate>هەڵوەشاندنەوە</button></div>
+</form></dialog>
+
+<!-- Transfer dialog -->
+<dialog id="trDlg"><form method="dialog" id="trForm">
+  <h3>گواستنەوە</h3>
+  <p class="muted" style="margin:0">پارە لە حسابێکەوە دەچێت بۆ حسابێکی تر (بۆ نموونە لە htx ەوە بۆ کەسێک).</p>
+  <label>لە<select name="from" required></select></label>
+  <label>بۆ<select name="to" required></select></label>
+  <label>بڕ ($)<input name="amt" type="number" step="any" min="0" required></label>
+  <label><span><input type="checkbox" name="fee"> عمولەی والێتی "لە" لێ ببڕدرێت</span></label>
+  <div id="trFeeHint" class="muted"></div>
+  <label>بەروار<input name="date" type="date" required></label>
+  <label>تێبینی<input name="note"></label>
+  <div class="row"><button class="b p" value="ok">پاشەکەوت</button><button class="b" value="cancel" formnovalidate>هەڵوەشاندنەوە</button></div>
+</form></dialog>
+
+<!-- Account dialog -->
+<dialog id="accDlg"><form method="dialog" id="accForm">
+  <h3 id="accTitle">حسابی نوێ</h3>
+  <label>ناو<input name="name" required></label>
+  <label>جۆر<select name="type"><option value="person">کەس</option><option value="wallet">والێت</option></select></label>
+  <label id="feeWrap">ڕێژەی عمولە (%)<input name="fee" type="number" step="any" min="0" value="1.1"></label>
+  <label id="openWrap">باڵانسی سەرەتا ($) <small>(+ هەیە / − قەرزارم)</small><input name="open" type="number" step="any" value="0"></label>
+  <label>تێبینی<input name="note"></label>
+  <div class="row"><button class="b p" value="ok">پاشەکەوت</button><button class="b" value="cancel" formnovalidate>هەڵوەشاندنەوە</button></div>
+</form></dialog>
+
+<script>
+const KEY = 'usdt-ledger-v1';
+const today = () => new Date().toISOString().slice(0,10);
+const uid = () => Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4);
+
+// Empty start: real data comes in through a backup file (kept off the published app)
+function seed(){
+  const db = {accounts:[], txs:[], settings:{feeSign:1, lastBackup:null}};
+  for (const name of ['binance','htx','tron']) db.accounts.push({id:uid(),name,type:'wallet',fee:1.1,note:''});
+  return db;
+}
+
+let db;
+try { db = JSON.parse(localStorage.getItem(KEY)) } catch(e) {}
+if (!db || !db.accounts) { db = seed(); save(); }
+
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e){ alert('پاشەکەوت نەکرا: ' + e.message); } }
+
+const fmt = n => (n<0?'−':'') + Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:2});
+const fmt2 = n => (n<0?'−':'') + Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const cls = n => n>0.004?'pos':n<-0.004?'neg':'';
+const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const accById = id => db.accounts.find(a=>a.id===id);
+const balance = id => db.txs.reduce((s,t)=>t.acc===id?s+t.amt:s,0);
+const feeOf = a => balance(a.id) * (a.fee||0) / 100;
+const lastDate = id => db.txs.filter(t=>t.acc===id).reduce((m,t)=>t.date>m?t.date:m,'');
+const statusTag = b => b>0.004?'<span class="tag pos">هەیە</span>':b<-0.004?'<span class="tag neg">قەرزارم - لامە</span>':'<span class="tag zero">پاک</span>';
+const sortedAccs = type => db.accounts.filter(a=>a.type===type).sort((a,b)=>a.name.localeCompare(b.name));
+
+function totals(){
+  let recv=0,pay=0,wal=0,fee=0;
+  for (const a of db.accounts){
+    const b = balance(a.id);
+    if (a.type==='wallet'){ wal+=b; fee+=b*(a.fee||0)/100; }
+    else if (b>0) recv+=b; else pay+=b;
+  }
+  const net = recv + pay + wal + db.settings.feeSign*fee;
+  return {recv,pay,wal,fee,net};
+}
+
+// ---------- render ----------
+function render(){
+  const T = totals();
+  document.getElementById('welcome').classList.toggle('hide', db.txs.length>0);
+  document.getElementById('stats').innerHTML = [
+    ['پارەم لای خەڵکە (هەیە)', T.recv],
+    ['قەرزارم (لامە)', T.pay],
+    ['کۆی والێتەکان', T.wal],
+    ['کۆی عمولە', T.fee],
+  ].map(([l,v])=>`<div class="card stat"><div class="lbl">${l}</div><div class="val ${cls(v)}">${fmt2(v)} $</div></div>`).join('');
+
+  const people = db.accounts.filter(a=>a.type==='person').map(a=>({a,b:balance(a.id)}));
+  const rowP = ({a,b}) => `<tr><td><button class="lnk" data-act="showAcc" data-id="${a.id}">${esc(a.name)}</button></td><td class="num ${cls(b)}">${fmt(b)}</td></tr>`;
+  const recv = people.filter(x=>x.b>0.004).sort((x,y)=>y.b-x.b), pay = people.filter(x=>x.b<-0.004).sort((x,y)=>x.b-y.b);
+  document.getElementById('homeRecv').innerHTML = (recv.map(rowP).join('')||'<tr><td class="muted">هیچ</td></tr>') + `<tr><td><b>کۆ</b></td><td class="num pos"><b>${fmt(T.recv)}</b></td></tr>`;
+  document.getElementById('homePay').innerHTML = (pay.map(rowP).join('')||'<tr><td class="muted">هیچ</td></tr>') + `<tr><td><b>کۆ</b></td><td class="num neg"><b>${fmt(T.pay)}</b></td></tr>`;
+
+  const wallets = sortedAccs('wallet');
+  const wRows = wallets.map(a=>{ const b=balance(a.id), f=b*(a.fee||0)/100; return {a,b,f}; });
+  document.getElementById('homeWallets').innerHTML = wRows.map(({a,b,f})=>
+    `<tr><td><button class="lnk" data-act="showAcc" data-id="${a.id}">${esc(a.name)}</button></td><td class="num">${a.fee||0}%</td><td class="num ${cls(b)}">${fmt(b)}</td><td class="num">${fmt2(f)}</td></tr>`).join('')
+    + `<tr><td><b>کۆ</b></td><td></td><td class="num ${cls(T.wal)}"><b>${fmt(T.wal)}</b></td><td class="num"><b>${fmt2(T.fee)}</b></td></tr>`;
+
+  const nb = document.getElementById('netBox');
+  nb.className = 'net ' + (T.net>=0?'pos':'neg');
+  nb.innerHTML = `<span>${T.net>=0?'قازانج ✅':'زەرەر ⚠️'} <small style="font-weight:400;font-size:13px;display:block;opacity:.8">کۆی گشتی: هەیە + قەرزار + والێت ${db.settings.feeSign>0?'+':'−'} عمولە</small></span><span class="val">${fmt2(T.net)} $</span>`;
+
+  renderPeople(); renderWallets(); renderTxs(); renderSettings();
+}
+
+function renderPeople(){
+  const q = document.getElementById('peopleSearch').value.trim().toLowerCase();
+  const f = document.getElementById('peopleFilter').value;
+  let rows = sortedAccs('person').map(a=>({a,b:balance(a.id)}))
+    .filter(({a})=>!q||a.name.toLowerCase().includes(q))
+    .filter(({b})=>f==='all'||(f==='pos'&&b>0.004)||(f==='neg'&&b<-0.004)||(f==='zero'&&Math.abs(b)<=0.004));
+  document.getElementById('peopleBody').innerHTML = rows.map(({a,b})=>`<tr>
+    <td><button class="lnk" data-act="showAcc" data-id="${a.id}">${esc(a.name)}</button>${a.note?`<div class="muted" style="font-size:12px">${esc(a.note)}</div>`:''}</td>
+    <td class="num ${cls(b)}"><b>${fmt(b)}</b></td><td>${statusTag(b)}</td><td class="num muted">${lastDate(a.id)}</td>
+    <td class="noprint"><button class="lnk" data-act="newTx" data-id="${a.id}">+ مامەڵە</button><button class="lnk" data-act="editAcc" data-id="${a.id}">دەستکاری</button></td></tr>`).join('')
+    || '<tr><td colspan="5" class="muted">هیچ کەسێک نییە</td></tr>';
+  const s = rows.reduce((t,r)=>t+r.b,0);
+  document.getElementById('peopleFoot').innerHTML = `<tr><td>کۆ (${rows.length})</td><td class="num ${cls(s)}">${fmt(s)}</td><td colspan="3"></td></tr>`;
+}
+
+function renderWallets(){
+  const ws = sortedAccs('wallet');
+  let tb=0,tf=0;
+  document.getElementById('walletBody').innerHTML = ws.map(a=>{ const b=balance(a.id), f=b*(a.fee||0)/100; tb+=b; tf+=f;
+    return `<tr><td><button class="lnk" data-act="showAcc" data-id="${a.id}">${esc(a.name)}</button></td><td class="num">${a.fee||0}%</td>
+    <td class="num ${cls(b)}"><b>${fmt(b)}</b></td><td class="num">${fmt2(f)}</td><td class="num">${fmt2(b-f)}</td>
+    <td class="noprint"><button class="lnk" data-act="newTx" data-id="${a.id}">+ مامەڵە</button><button class="lnk" data-act="editAcc" data-id="${a.id}">دەستکاری</button></td></tr>`; }).join('')
+    || '<tr><td colspan="6" class="muted">هیچ والێتێک نییە</td></tr>';
+  document.getElementById('walletFoot').innerHTML = `<tr><td>کۆ</td><td></td><td class="num ${cls(tb)}">${fmt(tb)}</td><td class="num">${fmt2(tf)}</td><td class="num">${fmt2(tb-tf)}</td><td></td></tr>`;
+  renderCalc();
+}
+function renderCalc(){
+  const amt = +document.getElementById('calcAmt').value || 0;
+  document.getElementById('calcOut').innerHTML = sortedAccs('wallet').map(a=>
+    `<span style="margin-inline-end:14px"><b>${esc(a.name)}</b> (${a.fee||0}%): <span class="num">${fmt2(amt*(a.fee||0)/100)}$</span></span>`).join('');
+}
+
+function renderTxs(){
+  const sel = document.getElementById('txFilter'), cur = sel.value;
+  sel.innerHTML = '<option value="">هەموو حسابەکان</option>' + ['person','wallet'].map(t=>
+    `<optgroup label="${t==='person'?'کەسەکان':'والێتەکان'}">` + sortedAccs(t).map(a=>`<option value="${a.id}">${esc(a.name)}</option>`).join('') + '</optgroup>').join('');
+  sel.value = cur;
+  const q = document.getElementById('txSearch').value.trim().toLowerCase();
+  // running balance per account in chronological order
+  const run = {}, after = {};
+  [...db.txs].sort((a,b)=>a.date.localeCompare(b.date)||(a.ts||0)-(b.ts||0)).forEach(t=>{ run[t.acc]=(run[t.acc]||0)+t.amt; after[t.id]=run[t.acc]; });
+  const list = db.txs.filter(t=>(!cur||t.acc===cur)&&(!q||(t.note||'').toLowerCase().includes(q)||(accById(t.acc)?.name||'').toLowerCase().includes(q)))
+    .sort((a,b)=>b.date.localeCompare(a.date)||(b.ts||0)-(a.ts||0));
+  document.getElementById('txCount').textContent = list.length + ' مامەڵە';
+  document.getElementById('txBody').innerHTML = list.map(t=>{ const a=accById(t.acc); return `<tr>
+    <td class="num">${t.date}</td><td>${esc(a?.name||'?')} <span class="muted" style="font-size:12px">${a?.type==='wallet'?'والێت':''}</span></td>
+    <td class="num ${cls(t.amt)}"><b>${t.amt>0?'+':''}${fmt(t.amt)}</b></td><td>${esc(t.note)}${t.link?' <span class="muted">⇄</span>':''}</td>
+    <td class="num ${cls(after[t.id])}">${fmt(after[t.id])}</td>
+    <td class="noprint"><button class="lnk" data-act="editTx" data-id="${t.id}">دەستکاری</button><button class="lnk d" data-act="delTx" data-id="${t.id}">سڕینەوە</button></td></tr>`; }).join('')
+    || '<tr><td colspan="6" class="muted">هیچ مامەڵەیەک نییە</td></tr>';
+}
+
+function renderSettings(){
+  document.querySelectorAll('input[name=feeSign]').forEach(r=>r.checked = +r.value===db.settings.feeSign);
+  const lb = db.settings.lastBackup;
+  document.getElementById('lastBackup').textContent = lb ? 'دوایین باکئەپ: ' + lb : 'هێشتا باکئەپت دانەگرتووە.';
+  const warn = document.getElementById('backupWarn');
+  const days = lb ? (Date.now() - new Date(lb).getTime())/864e5 : 99;
+  warn.classList.toggle('hide', days < 7 || !db.txs.length);
+  warn.innerHTML = `⚠️ ${lb?'زیاتر لە ٧ ڕۆژە':'هێشتا'} باکئەپت دانەگرتووە. <button class="lnk" data-act="backup">ئێستا باکئەپ دابگرە</button>`;
+}
+
+// ---------- tabs ----------
+function showTab(name){
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on', b.dataset.tab===name));
+  document.querySelectorAll('main > section').forEach(s=>s.classList.toggle('hide', s.id!=='tab-'+name));
+}
+document.getElementById('nav').onclick = e => { const t=e.target.closest('button'); if(t) showTab(t.dataset.tab); };
+
+// ---------- dialogs ----------
+const accOptions = (selId) => ['person','wallet'].map(t=>
+  `<optgroup label="${t==='person'?'کەسەکان':'والێتەکان'}">`+sortedAccs(t).map(a=>`<option value="${a.id}" ${a.id===selId?'selected':''}>${esc(a.name)}${t==='wallet'?` (${a.fee||0}%)`:''}</option>`).join('')+'</optgroup>').join('');
+
+let editingTx = null;
+function openTx(accId, tx){
+  editingTx = tx || null;
+  const f = document.getElementById('txForm');
+  f.acc.innerHTML = accOptions(tx ? tx.acc : accId);
+  f.amt.value = tx ? Math.abs(tx.amt) : '';
+  f.dir.value = tx ? (tx.amt<0?'-1':'1') : '1';
+  f.date.value = tx ? tx.date : today();
+  f.note.value = tx ? tx.note||'' : '';
+  document.getElementById('txTitle').textContent = tx ? 'دەستکاری مامەڵە' : 'مامەڵەی نوێ';
+  updTxLabels();
+  document.getElementById('txDlg').showModal();
+  f.amt.focus();
+}
+function updTxLabels(){
+  const f = document.getElementById('txForm'), a = accById(f.acc.value);
+  const w = a?.type==='wallet';
+  document.getElementById('dirPos').textContent = w ? 'هاتە ناو والێت (+)' : 'پارەم دایە / لای ئەوە (+)';
+  document.getElementById('dirNeg').textContent = w ? 'دەرچوو لە والێت (−)' : 'پارەی دامێ / قەرزارم (−)';
+  const amt = +f.amt.value||0;
+  document.getElementById('txFeeHint').textContent = w && a.fee ? `عمولەی ${a.name} (${a.fee}%) بۆ ئەم بڕە: ${fmt2(amt*a.fee/100)}$` : '';
+}
+document.getElementById('txForm').addEventListener('input', updTxLabels);
+document.getElementById('txDlg').addEventListener('close', ()=>{
+  const dlg = document.getElementById('txDlg'); if (dlg.returnValue!=='ok') return;
+  const f = document.getElementById('txForm');
+  const amt = Math.abs(+f.amt.value) * (+f.dir.value);
+  if (!amt) return;
+  if (editingTx){ Object.assign(editingTx,{acc:f.acc.value,amt,date:f.date.value,note:f.note.value.trim()}); }
+  else db.txs.push({id:uid(),acc:f.acc.value,amt,date:f.date.value,note:f.note.value.trim(),ts:Date.now()});
+  save(); render();
+});
+
+function openTransfer(){
+  const f = document.getElementById('trForm');
+  const ws = sortedAccs('wallet');
+  f.from.innerHTML = accOptions(ws[0]?.id); f.to.innerHTML = accOptions();
+  f.amt.value=''; f.note.value=''; f.date.value=today(); f.fee.checked=false;
+  updTrHint();
+  document.getElementById('trDlg').showModal(); f.amt.focus();
+}
+function updTrHint(){
+  const f = document.getElementById('trForm'), a = accById(f.from.value), amt=+f.amt.value||0;
+  const fee = f.fee.checked && a?.fee ? amt*a.fee/100 : 0;
+  document.getElementById('trFeeHint').textContent = fee ? `عمولە: ${fmt2(fee)}$ — لە ${a.name} دەردەچێت ${fmt2(amt+fee)}$، دەگاتە ${fmt2(amt)}$` : '';
+}
+document.getElementById('trForm').addEventListener('input', updTrHint);
+document.getElementById('trDlg').addEventListener('close', ()=>{
+  const dlg = document.getElementById('trDlg'); if (dlg.returnValue!=='ok') return;
+  const f = document.getElementById('trForm'), amt = Math.abs(+f.amt.value);
+  if (!amt || f.from.value===f.to.value) { if(f.from.value===f.to.value) alert('"لە" و "بۆ" هەمان حسابن'); return; }
+  const from = accById(f.from.value), to = accById(f.to.value);
+  const fee = f.fee.checked && from.fee ? amt*from.fee/100 : 0;
+  const link = uid(), ts = Date.now(), note = f.note.value.trim();
+  db.txs.push({id:uid(),acc:from.id,amt:-(amt+fee),date:f.date.value,note:`بۆ ${to.name}${fee?` (عمولە ${fmt2(fee)})`:''}${note?' — '+note:''}`,link,ts});
+  db.txs.push({id:uid(),acc:to.id,amt:amt,date:f.date.value,note:`لە ${from.name}${note?' — '+note:''}`,link,ts:ts+1});
+  save(); render();
+});
+
+let editingAcc = null;
+function openAcc(type, acc){
+  editingAcc = acc || null;
+  const f = document.getElementById('accForm');
+  f.name.value = acc?.name||''; f.type.value = acc?.type||type; f.fee.value = acc ? acc.fee : 1.1; f.note.value = acc?.note||''; f.open.value = 0;
+  document.getElementById('openWrap').classList.toggle('hide', !!acc);
+  document.getElementById('accTitle').innerHTML = acc ? `دەستکاری: ${esc(acc.name)} <button type="button" class="lnk d" data-act="delAcc" data-id="${acc.id}" style="font-size:13px">سڕینەوەی حساب</button>` : (type==='wallet'?'والێتی نوێ':'کەسی نوێ');
+  updAccFee();
+  document.getElementById('accDlg').showModal();
+}
+function updAccFee(){ const f=document.getElementById('accForm'); document.getElementById('feeWrap').classList.toggle('hide', f.type.value!=='wallet'); }
+document.getElementById('accForm').addEventListener('input', updAccFee);
+document.getElementById('accDlg').addEventListener('close', ()=>{
+  const dlg = document.getElementById('accDlg'); if (dlg.returnValue!=='ok') return;
+  const f = document.getElementById('accForm'), name=f.name.value.trim(); if(!name) return;
+  const data = {name,type:f.type.value,fee:f.type.value==='wallet'?(+f.fee.value||0):0,note:f.note.value.trim()};
+  if (editingAcc) Object.assign(editingAcc, data);
+  else { const id=uid(); db.accounts.push({id,...data}); const o=+f.open.value; if(o) db.txs.push({id:uid(),acc:id,amt:o,date:today(),note:'باڵانسی سەرەتا',ts:Date.now()}); }
+  save(); render();
+});
+
+// ---------- actions ----------
+document.body.addEventListener('click', e=>{
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  const id = b.dataset.id;
+  switch(b.dataset.act){
+    case 'newTx': openTx(id); break;
+    case 'newTransfer': openTransfer(); break;
+    case 'newAcc': openAcc(b.dataset.type); break;
+    case 'editAcc': openAcc(null, accById(id)); break;
+    case 'showAcc': showTab('txs'); document.getElementById('txFilter').value=id; renderTxs(); break;
+    case 'editTx': openTx(null, db.txs.find(t=>t.id===id)); break;
+    case 'delTx': {
+      const t = db.txs.find(x=>x.id===id);
+      const both = t.link ? db.txs.filter(x=>x.link===t.link) : [t];
+      if (confirm(both.length>1?'ئەم گواستنەوەیە لە هەردوو حسابەکە دەسڕدرێتەوە. دڵنیایت؟':'ئەم مامەڵەیە بسڕدرێتەوە؟')) { db.txs = db.txs.filter(x=>!both.includes(x)); save(); render(); }
+      break; }
+    case 'delAcc': {
+      const a = accById(id), n = db.txs.filter(t=>t.acc===id).length;
+      if (confirm(`"${a.name}" و ${n} مامەڵەکەی دەسڕدرێنەوە. دڵنیایت؟`)) {
+        db.accounts = db.accounts.filter(x=>x.id!==id); db.txs = db.txs.filter(t=>t.acc!==id);
+        document.getElementById('accDlg').close(); save(); render(); }
+      break; }
+    case 'backup': {
+      const stamp = new Date().toISOString().slice(0,16).replace('T','_').replace(':','-');
+      download(`USDT-backup-${stamp}.json`, JSON.stringify(db,null,1), 'application/json').then(ok=>{
+        if (ok) { db.settings.lastBackup = today(); save(); renderSettings(); } });
+      break; }
+    case 'restore': document.getElementById('restoreFile').click(); break;
+    case 'csv': exportCsv(); break;
+    case 'reset': if (confirm('هەموو داتاکان دەسڕدرێنەوە. پێشتر باکئەپ دابگرە! دڵنیایت؟')) { db = seed(); save(); render(); } break;
+  }
+});
+document.getElementById('txForm').acc.addEventListener('change', updTxLabels);
+document.getElementById('restoreFile').addEventListener('change', async e=>{
+  const file = e.target.files[0]; if(!file) return;
+  try { const d = JSON.parse(await file.text()); if(!d.accounts||!d.txs) throw new Error('فایلەکە دروست نییە');
+    if (confirm(`${d.accounts.length} حساب و ${d.txs.length} مامەڵە دەگەڕێندرێنەوە، داتای ئێستا جێگای دەگرێتەوە. دڵنیایت؟`)) { db=d; db.settings ||= {feeSign:1}; save(); render(); }
+  } catch(err){ alert('هەڵە: '+err.message); }
+  e.target.value='';
+});
+document.querySelectorAll('input[name=feeSign]').forEach(r=>r.addEventListener('change',()=>{ db.settings.feeSign=+r.value; save(); render(); }));
+['peopleSearch','peopleFilter'].forEach(id=>document.getElementById(id).addEventListener('input',renderPeople));
+['txSearch','txFilter'].forEach(id=>document.getElementById(id).addEventListener('input',renderTxs));
+document.getElementById('calcAmt').addEventListener('input', renderCalc);
+
+// Phones: open the share sheet (Telegram, Files, Drive...); desktop: normal download
+async function download(name, text, type){
+  const file = new File([text], name, {type});
+  if (matchMedia('(pointer:coarse)').matches && navigator.canShare?.({files:[file]})) {
+    try { await navigator.share({files:[file], title:name}); return true; }
+    catch(e){ if (e.name==='AbortError') return false; }
+  }
+  const a = document.createElement('a'); a.href = URL.createObjectURL(file); a.download = name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  return true;
+}
+function exportCsv(){
+  const q = v => `"${String(v??'').replace(/"/g,'""')}"`;
+  const T = totals();
+  const lines = [['ناو','جۆر','عمولە %','باڵانس','دۆخ','عمولە'].map(q).join(',')];
+  for (const t of ['person','wallet']) for (const a of sortedAccs(t)) { const b=balance(a.id);
+    lines.push([a.name, t==='wallet'?'والێت':'کەس', a.fee||0, b.toFixed(2), b>0?'هەیە':b<0?'قەرزارم - لامە':'', t==='wallet'?(b*a.fee/100).toFixed(2):''].map(q).join(',')); }
+  lines.push('', [q('قازانج / زەرەر'),'','',T.net.toFixed(2)].join(','), '', ['بەروار','حساب','بڕ','تێبینی'].map(q).join(','));
+  for (const t of [...db.txs].sort((a,b)=>a.date.localeCompare(b.date))) lines.push([t.date, accById(t.acc)?.name, t.amt, t.note].map(q).join(','));
+  return download(`USDT-${today()}.csv`, '﻿'+lines.join('\r\n'), 'text/csv;charset=utf-8');
+}
+
+render();
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>
